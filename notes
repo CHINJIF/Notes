@@ -1,3 +1,8 @@
-## AWS
+## AWS ##
 Jenkins - Ubuntu image
 ssh -i "Jenkins.pem" ubuntu@ec2-54-152-45-111.compute-1.amazonaws.com
+
+## Cloud9 ##
+# HTTP port runing on 8080 - 8082
+http://<workspacename>-<username>.c9users.io:8081
+  e.g http://haskell-shuyanghuang.c9users.io:8080/
