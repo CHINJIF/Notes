@@ -185,4 +185,35 @@ repcached -p 11211 -x localhost -v -d
 * dir  数据快照写入的目录
 * save sec      决定多少次变更之后，把数据写入磁盘持久化
 
+### op
+```
+set a_key 4     // 4 字节数
+a_value
+
+get a_key
+
+setex foo 5 3    // 3 sec 后过期
+```
+
+#### 储存链表
+```
+lpush data 3
+foo
+
+lpush data 3
+bar
+
+lrange data 0 -1   // check linked list from head to tail
+```
+
+#### 有向集合
+```
+zadd sets 1 4
+hoge
+
+zadd sets 2 4
+fuga
+
+zrange sets 0 -1
+```
 
