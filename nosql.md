@@ -266,3 +266,16 @@ hkyes user:jdoe
 hvalue user:jdoe
 ```
 
+#### 场景3 集合，用集合保存社交网站圈子数据
+* 那些网站，属于一个圈子，circle
+```
+sadd circle:jdoe:family users:mike
+sadd circle:jdoe:family users:pite
+
+sadd circile:jdoe:soccer users:brade
+
+smembers circle:jdoe:family
+
+sinter circle:jdoe:family circle:jdoe:soccer   // 求交集
+```
+
