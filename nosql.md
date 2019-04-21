@@ -279,3 +279,34 @@ smembers circle:jdoe:family
 sinter circle:jdoe:family circle:jdoe:soccer   // 求交集
 ```
 
+#### query for keys
+```
+keys h*llo
+keys h?llo
+keys h[ae]llo
+```
+
+### QATH 协议
+skip
+
+### 数据模型设计 一个应用 - for OATH 协议
+数据：
+
+* consumer keys   加密的密钥
+* consumer secrets        lksdlfkdsj
+* request tokens 签名
+* access tokens
+* nonces   登陆的随机码
+
+服务器代码：
+```
+hgetall  /consumers/key:lksdlfkdsj     // 验证这个用户
+sadd  /nonces/key:lksdlfkdsj/timestamp:20192039238    //验证随机码
+hset  /request_tokens/key:lksdlfkdsj  ksloiefsjkl ksjdfiejoj  //给key建立一个token
+
+set /authorizations/request_token:ksloiefsjkl
+```
+
+### 场景4 倒排索引
+* 文章分词，去掉stop word之后 做倒排索引 inverted index 
+* word, [page_num, offset， page_num ， offset] 
