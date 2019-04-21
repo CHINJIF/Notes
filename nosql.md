@@ -88,7 +88,7 @@ nosql 数据库入门
 * 应用场景有限，主要作为数据库缓存
 * 哈希方式存储
 * 简单文本协议进行数据通信
-* 只操作字符型数据
+* 只操作字符型数据，只是字节流
 * 其他类型数据由应用解释，不支持复杂的数据类型，全部依靠应用程序来解释类型，应用端厚，服务器没有多少东西，不负责序列化及反序列化
 * 集群采用一致性散列（哈希）算法
 
@@ -215,5 +215,54 @@ zadd sets 2 4
 fuga
 
 zrange sets 0 -1
+```
+
+### master slave 复制
+* 在redis-server 的配置文件里把该server 配制成某master ip／port的slave
+* slave of localhost
+
+* 在master push的数据，在slave里自动复制
+
+### start
+* redis-server config_file
+
+### 集群管理
+* 哈希一致性算法 来管理redis 集群 节点，类似于memcached 多进程
+* shard -- 多redis master
+* replic／slave -- 多备份
+* redis里面没有中心节点，没有central failure，hadoop 的namenode 就有
+
+### redis 数据类型操作与应用
+* redis-cli 命令行客户端
+
+#### 场景1 计数器
+* 论坛帖子点击数，点击量会造成大量的数据库读写
+
+```
+> redis-cli -p 6379
+
+set visits:1:totals 21389     //more key compose keys, 1 means page 1
+set visits:2:totals 13243242
+
+incr visits:342:totals    // increase totals
+get visits:342:totals
+```
+
+#### 场景2 非结构化数据
+hset, hget, hincrby  用于操作哈希表，便于存储非结构化数据，e.g 如果每个user带有的属性不同，用redis非常方便
+```
+hset users:jdoe name "john doe"
+hset users:jdoe email "xxx@cc.com"
+hset users:jdoe phone "343342342"
+
+hincrby users:jdoe visits 1    // increse by visits by 1
+
+hget users:jdoe email
+
+hgetall users:jdoe
+
+hkyes user:jdoe
+
+hvalue user:jdoe
 ```
 
