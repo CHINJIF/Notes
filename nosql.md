@@ -315,3 +315,44 @@ set /authorizations/request_token:ksloiefsjkl
 //分词后 文章剩下的关键字有 finance, bloomberg, issue
 sinter words:finance words:bloomberg word:issue  // 求所有词出现的交集就好 
 ```
+
+### redis 持久化
+* 快照 (snapshot)：作为备份。设定触发条件，发生则把内存里的数据，写入数据库的snapshot文件，e.g. 写入了>100文件。系统奔溃以后，重启会把快照的东西载入内存。会造成数据丢失, 上一次备份，崩溃之间的数据会丢失 .rdb
+* AOF (Append Only File)：所有改写数据操作都会写入日志，崩溃，日志重新运行所有命令 .aof
+
+#### 快照
+CONFIG
+```
+save 300 10  // 每10秒钟 有300次修改
+dbfilename dump.rdb    // 快照文件 文件名
+```
+
+##### 快照原理
+* 生成快照时，当前进程fork出一个子进程，写入rdb文件
+* 会受到内存大小的限制，容易造成内存/redis的崩溃
+* master/slave 也是借助快照文件传递数据
+
+##### 快照会引发的问题
+* 写快照，把数据从load back from 快照，会产生很多io，造成阻塞
+* 解决方法：采用master/slave，永远不要再master上设置快照！ 在slave上设置，那么master不会崩溃
+
+#### AOF
+```
+appendonly yes   //enable  AOF
+```
+* AOF 优先于 RDB
+* RDB 性能优于 AOF，不会重复更新一条数据
+* AOF rewrite, 合并重复aof文件 去掉重复
+
+#### VM
+* 为了解决数据库大小受内存限制
+* redis不会将全部数据装入内存，把热value放入内存，冷数据放在磁盘
+* 但是因为操作系统本身就会做VM优化，所以这个功能其实有重复，后续版本去掉
+
+## Mongodb -- 文档数据库
+
+
+
+## Cassandra -- 键值数据库
+
+
