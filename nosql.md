@@ -1,5 +1,8 @@
-#### 参考书
-nosql 数据库入门
+## NOSQL 综述
+
+### 特点
+* 分布式集群
+* 一个产品一般都很有针对性，有其对应的应由场景
 
 ### 核心技术
 * 存储引擎
@@ -34,16 +37,19 @@ nosql 数据库入门
 * 依赖于强大的服务器，贵，hard to scale
 * 难以处理非结构化数据，列都要预先定义好
 
+#### 参考书
+nosql 数据库入门
 
-## CAP定理
+### CAP定理
 * consistency -- 一致性 ACID，通常牺牲consistency
 * availability -- 可用性
 * patition tolerance - 分区容忍性，一部分分区坏掉，还是可以用
 * cap 只能满足其二
 
-## nosql
-* 分布式集群
-* 一个产品一般都很有针对性，有其对应的应由场景
+#### 只能满足其二
+* ca: rational db
+* cp: mongodb
+* ap: dynamo, cassandro
 
 ### 分类
 * key-value 键值数据库:  dynamo, cassandra, riak, voldemort, redis
@@ -54,28 +60,23 @@ nosql 数据库入门
 * 面向列的数据库， hbase，google bigtable
 * 面向图的数据库， neo4j
 
-### cap
-* ca: rational db
-* cp: mongodb
-* ap: dynamo, cassandro
-
-### redis
+### 产品
+#### redis
 * 支持丰富的数据类型：数组，链表，集合
 
-### big table
-#### example
+#### big table
+##### example
 * 学生表需要存，s(s#, snumber, sdepartment, sa)
 * 所有的数据都放放在一个大表里
 
-### mongodb
+#### mongodb
 * 面向文档，所谓文档其实就是一行，但是每一行列是不固定的，为了和行这个概念区分，叫文档
 
-### new sql
+#### new sql
 * 关系数据化nosql
 * nosql上面包装一个sql解析器--sql外壳
 * voltdb
    * OLTP, SQL, 分布式集群，内存数据库
-
 
 ## memcached
 * 键值存储，基于内存
@@ -122,7 +123,7 @@ delete a_key
 * 多个拷贝，可以启动多个memcached
 * 保证一致性 - 一致性哈希
 
-#### 一致性哈希
+### 一致性哈希
 * memcached node i 负责管理 keys 满足： hash（key) % n == i
 * 假设一共四个节点，那么key： abc 会落到 hash（"abc") % 4 = 2, 2好节点
 
@@ -286,10 +287,10 @@ keys h?llo
 keys h[ae]llo
 ```
 
-### QATH 协议
+#### 场景4 QATH 协议
 skip
 
-### 数据模型设计 一个应用 - for OATH 协议
+##### 数据模型设计 一个应用 - for OATH 协议
 数据：
 
 * consumer keys   加密的密钥
@@ -307,6 +308,10 @@ hset  /request_tokens/key:lksdlfkdsj  ksloiefsjkl ksjdfiejoj  //给key建立一�
 set /authorizations/request_token:ksloiefsjkl
 ```
 
-### 场景4 倒排索引
+#### 场景5 倒排索引
 * 文章分词，去掉stop word之后 做倒排索引 inverted index 
-* word, [page_num, offset， page_num ， offset] 
+* word, [(document_id, offset，word_count), (document_id， offset, word_count)] 
+```
+//分词后 文章剩下的关键字有 finance, bloomberg, issue
+sinter words:finance words:bloomberg word:issue  // 求所有词出现的交集就好 
+```
