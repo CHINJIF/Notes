@@ -577,8 +577,22 @@ put 'member', 'scutshuxue', 'info:birthday', '1987-06-17'
 #### 查询记录
 ```
 get 'member', 'scutshuxue'
+get 'member', 'scutshuxue', 'info'     //只查询某个列族
+get 'member', 'scutshuxue', 'info:age'  
+scan 'memeber'     //扫描
 ```
 
+#### 删除更新
+```
+delete  'member', 'scutshuxue', 'info'
+deleteall 'member', 'scutshuxue'
+```
+
+### 模式设计和场景应用
+##### 什么场景试用
+* 成熟的数据分析主题，查询模式已经确立且不轻易改变
+* 适合海量的，但是简单的操作(key-value)
+* 适合高速插入，大量读取
 
 #### 参考书
 HBASE 权威指南 CH1 CH8
