@@ -455,9 +455,9 @@ appendonly yes   //enable  AOF
 * bigtable的**join**，可以通过chain key-value queries来实现
 
 #### HBASE 咯i就是图
-|行键|时间戳|列族 限定符(列名) contents|列祖 anchor| ...
+|行键|时间戳|列族 限定符(列名) contents|列祖 anchor| 
 |---|---|----|----|
-|"com.cnn.www"|contents:html..."||
+|"com.cnn.www"|16|contents:html..."||
 
 ### 时间戳
 
