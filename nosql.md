@@ -375,7 +375,6 @@ appendonly yes   //enable  AOF
 {"foo":3, "greating": "Hello, world!"},   // 一行就是一个文档
 {"Foo":3},                                // 支持数值，字符串, case sensitive
 {"greating":"Hello world", "greating": "Hello, mongoDB!"} // 一个文档中列不能重复
-
 ```
 **文档也可以嵌套，利用文档嵌套可以做链接**
 
@@ -387,14 +386,28 @@ appendonly yes   //enable  AOF
 * 由多个集合组成
 * 数据库名必须全小写
 
+#### 安装和配置
+* /etc/mongod.conf
+  * fork: 子进程
+  * port: 27017
+  * dbfilepath : 数据库文件存放
+* mogod -f /etc/mongod.conf
 
 ##### 支持的数据类型
-
+* null
+* float ...
+* regx
+* array： {"messages": []}, {"a_array": {1, 2, 3}}
+* undefine
+* binaray
+* object id: 12字节，0-3字节 时间戳， 4-6字节 机器表示， 7-8字节pid， 9-11字节计数器； 系统缺省function产生
+* 文档嵌套：
+  * {"response": 
+       {"landmarkss": [{"Name": "tiananmen"}]}
 
 #### 参考书
 * mongodb权威指南
 * 深入学习mongodb
-
 
 ## Cassandra -- 键值数据库
 
