@@ -455,6 +455,7 @@ appendonly yes   //enable  AOF
 * 日志及数据数据库， 插入和删除都是增加数据+时间戳，不会删除数据而是加一个删除标签
 * 基于HDFS, hadoop filesystem
 
+
 ### big table
 * 所有的数据都可以用三个东西表示：
   * 行键
@@ -552,6 +553,32 @@ HBASE 是不停的写，插入和删除都是写一条新数据，就是往数�
 * HBASE 也用 b+树
 * 称为LSM索引
   * LSM tree： 
+
+### OP
+#### 表操作
+```
+> create 'member', 'member_id', 'address', 'info'
+> list                            // 列出所有的表
+> describe 'member'              // 表的信息
+> exists 'member'                // 看表存在否
+> is_enabled 'member'             // 看表是否在线
+
+> alter 'member', {NAME=>'member_id', METHOD=>'delete'}   //删除列
+```
+
+#### 插入记录
+```
+put 'member', 'scutshuxue', 'info:age', '24'              // 新建了一列 age
+put 'member', 'scutshuxue', 'info:birthday', '1987-06-17'
+```
+
+**数据类型只支持字符型**
+
+#### 查询记录
+```
+get 'member', 'scutshuxue'
+```
+
 
 #### 参考书
 HBASE 权威指南 CH1 CH8
