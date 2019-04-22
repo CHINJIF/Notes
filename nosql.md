@@ -474,7 +474,7 @@ appendonly yes   //enable  AOF
 ###### 列族
 * 列的表示<列族>:<限定符>  family:qualifier
 * 列族实际上是对列分组，因为逻辑里，一些概念会需要一起访问/修改，e.g security， 把对应security的列放在一起，称他们为一个列族。逻辑放在一起，物理存储在一起。
-  * 同样的列族 存储在一样的物理存储里，对应一个 Hreigon -> Store 
+  * 同样的列族 存储在一样的物理存储里，对应一个 Hreigon -> Store(HFile)
   * 一个列族的所有列存储在同一个底层的存储文件里，这个存储文件叫做 **HFile**
   * 那么一行有可能分布在不同的物理Store里
 
@@ -492,6 +492,41 @@ appendonly yes   //enable  AOF
 
 #### HBASE 物理模型
 ![HBASE Architecture](img/hbase_architecture.png)
+
+* HMaster： 总控节点
+* HRegion：一个物理设备
+* Store：一个列族存在一个Store里
+* memstore： 内存
+* storefile：持久化外存
+
+* HFile 本身又是分布式的，不同的HFile会被分不到不同的DFS节点
+
+##### Region
+* 行最开始都存在一个region里
+* 数据增长后，会被分区到不同的region
+
+##### 系统表
+* meta
+  * 记录表的region的信息，某个key去哪个region找
+  * meta 表也可能跨region
+* root
+  * root记录meta表怎么对应region
+  * root只能有一个，不跨region
+  
+**三级查找，就能找到 root->meta->region**, zookeeper负责这些通信管理
+
+##### memstore 和 storefile
+* 新数据先写入memstore
+* 达到阈值之后，写入storefile
+* storefile存不下了，分布式，分布到不同的region
+
+### HBASE VS Oracle
+* 索引不同
+* Hbase 适用于大量插入同时又读写的情况
+* Hbase的瓶颈是硬盘传输速度，oracle的瓶颈是硬盘寻道时间(很受限)
+* Oracle all-in-one
+
+HBASE 是不停的写，插入和删除都是写一条新数据，就是往数据库批量并行写数据
 
 #### 参考书
 HBASE 权威指南 CH1 CH8
