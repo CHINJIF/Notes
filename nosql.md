@@ -455,7 +455,7 @@ appendonly yes   //enable  AOF
 * bigtable的**join**，可以通过chain key-value queries来实现
 
 #### HBASE 逻辑视图
-|行键|时间戳|列族 限定符(列名) contents|列祖 anchor| 
+|行键|时间戳|列族 限定符(列名) contents|列族 anchor| 
 |---|---|----|----|
 |"com.cnn.www"|18||anchor:my.look.ca="CNN"|
 |"com.cnn.www"|16|contents:data="IBM"||
@@ -464,24 +464,35 @@ appendonly yes   //enable  AOF
 * 插入，是对同样的key追加一条新数据，时间戳不一样
 * 删除，也是追加一条新数据，有删除标记
 
+###### 构成
+* 最基本单位：列
+* 多列 => 列族
+* 多列/列族 => 行
+* 多行 => 表
+
+
+###### 列族
+* 列的表示<列族>:<限定符>  family:qualifier
+* 列族实际上是对列分组，因为逻辑里，一些概念会需要一起访问/修改，e.g security， 把对应security的列放在一起，称他们为一个列族。逻辑放在一起，物理存储在一起。
+  * 同样的列族 存储在一样的物理存储里，对应一个 Hreigon -> Store 
+  * 一个列族的所有列存储在同一个底层的存储文件里，这个存储文件叫做 **HFile**
+  * 那么一行有可能分布在不同的物理Store里
+
+
+
 ##### 行键
 * 访问行的方式
   * 单个行键
   * 给定行键范围： partial key
   * 全表扫描： scan
 
-##### 列组与列
-* 列的表示<列组>:<限定符>
-* 行键相同的情况下，列组存在一起 ？？ 
-* ？？ 到底怎么体现是面向列的？？
-
 #### 时间戳
 * 可以基于时间戳expire数据
 * 用于版本控制
 
 #### HBASE 物理模型
-
+![HBASE Architecture](img/hbase_architecture.png)
 
 #### 参考书
 HBASE 权威指南 CH1 CH8
-![HBASE Architecture](img/hbase_architecture.png)
+
