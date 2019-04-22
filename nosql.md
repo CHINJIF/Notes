@@ -454,12 +454,30 @@ appendonly yes   //enable  AOF
 * bigtable里如果做groupby很麻烦，但是如果是做基于key，value的查询，则很快
 * bigtable的**join**，可以通过chain key-value queries来实现
 
-#### HBASE 咯i就是图
+#### HBASE 逻辑视图
 |行键|时间戳|列族 限定符(列名) contents|列祖 anchor| 
 |---|---|----|----|
-|"com.cnn.www"|16|contents:html..."||
+|"com.cnn.www"|18||anchor:my.look.ca="CNN"|
+|"com.cnn.www"|16|contents:data="IBM"||
+|"com.cnn.www"|15|contents:data="IBM"||
 
-### 时间戳
+* 插入，是对同样的key追加一条新数据，时间戳不一样
+* 删除，也是追加一条新数据，有删除标记
+
+##### 行键
+* 访问行的方式
+  * 单个行键
+  * 给定行键范围： partial key
+  * 全表扫描： scan
+
+##### 列组与列
+* 列的表示<列组>:<限定符>
+* 行键相同的情况下，列组存在一起 ？？ 
+* ？？ 到底怎么体现是面向列的？？
+
+#### 时间戳
 
 
+#### 参考书
+HBASE 权威指南 CH1 CH8
 
