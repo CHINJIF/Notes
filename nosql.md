@@ -158,27 +158,27 @@ repcached -p 11211 -x localhost -v -d
 * c实现
 * 稳定性高
 
-### 特点
+#### 特点
 * 内存 + 磁盘的持久化保存
 * 具有丰富的数据类型
 * 自带master slave复制
 * 数据快照
 
-### 支持的数据类型
+#### 支持的数据类型
 * string
 * 链表
 * 集合
 * 有序集合
 * 散列表
 
-### 场景
+#### 场景
 * 时间线应用，e.g 微博，
 * 对数组有频繁的添加和删除
 
-### install
+#### install
 * yum install redis
 
-### config
+#### config
 * daemonize yes    // 是不是后台运行
 * port 6379
 * bind 127.0.0.1
@@ -186,7 +186,7 @@ repcached -p 11211 -x localhost -v -d
 * dir  数据快照写入的目录
 * save sec      决定多少次变更之后，把数据写入磁盘持久化
 
-### op
+#### op
 ```
 set a_key 4     // 4 字节数
 a_value
@@ -224,10 +224,10 @@ zrange sets 0 -1
 
 * 在master push的数据，在slave里自动复制
 
-### start
+#### start
 * redis-server config_file
 
-### 集群管理
+#### 集群管理
 * 哈希一致性算法 来管理redis 集群 节点，类似于memcached 多进程
 * shard -- 多redis master
 * replic／slave -- 多备份
