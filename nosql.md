@@ -18,6 +18,16 @@
 * 容错和恢复
 
 ### 数据存储
+#### OLTP VS OLAP 
+ 数据处理大致可以分成两大类：联机事务处理OLTP（on-line transaction processing）、联机分析处理OLAP（On-Line Analytical Processing）
+* OLTP: On-line transaction processing
+  * 也叫联机事务处理，表示事务性非常高的系统，一般都是高可用的在线系统，以小的事务以及小的查询为主
+  * OLTP是传统的关系型数据库的主要应用，主要是基本的、日常的事务处理，例如银行交易。
+* OLAP: One-line Analytical procesing
+  * OLAP是数据仓库系统的主要应用，支持复杂的分析操作，侧重决策支持，并且提供直观易懂的查询结果。 
+  * OLAP中可以大量使用位图索引，物化视图，对于大的事务，尽量寻求速度上的优化，没有必要像OLTP要求快速提交，甚至要刻意减慢执行的速度。
+  
+
 #### 行式存储
 * 数据文件基本组成：块／页
 * 缺点，如果需要按列筛选，每一行所有数据都需要读内存
@@ -525,8 +535,18 @@ appendonly yes   //enable  AOF
 * Hbase 适用于大量插入同时又读写的情况
 * Hbase的瓶颈是硬盘传输速度，oracle的瓶颈是硬盘寻道时间(很受限)
 * Oracle all-in-one
+* Hbase支持的功能不如oracle，sql的很多groupby etc
+* HBASE 只支持key-value查询，索引只能针对key
 
 HBASE 是不停的写，插入和删除都是写一条新数据，就是往数据库批量并行写数据
+
+#### 行式vs列式
+* 行式数据库是按行存
+  * 对于列的检索，e.g 统计country 列包含哪些国家
+  * 需要把全部所有行，>GB,TB 数据载入内存，筛选出需要的一列 country
+* 列式数据就是按列族存
+* 同一列的元素一般很相似，很容易压缩，e.g 如果只有0/1 按位压缩
+* 对于OLTP 类型事务，因为对ACID 要求很高，事务性很强，反而行式会好用的多
 
 #### 参考书
 HBASE 权威指南 CH1 CH8
