@@ -476,8 +476,12 @@ appendonly yes   //enable  AOF
 * ？？ 到底怎么体现是面向列的？？
 
 #### 时间戳
+* 可以基于时间戳expire数据
+* 用于版本控制
+
+#### HBASE 物理模型
 
 
 #### 参考书
 HBASE 权威指南 CH1 CH8
-
+![HBASE Architecture]("")
