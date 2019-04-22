@@ -363,7 +363,7 @@ appendonly yes   //enable  AOF
 #### 基本概念
 * C++ 编写， 支持Linux，windows，solaris 
 * 主要针对**非结构化数据**，对列无限制
-* 全面的索引支持，可以在任意属性上建立索引
+* 全面的索引支持，可以在任意属性上建立索引. 没有列结构，但是还是能基于列做索引
 * 支持map/reduce
 * 高可用
 
@@ -402,13 +402,64 @@ appendonly yes   //enable  AOF
 * binaray
 * object id: 12字节，0-3字节 时间戳， 4-6字节 机器表示， 7-8字节pid， 9-11字节计数器； 系统缺省function产生
 * 文档嵌套：
-  * {"response": 
-       {"landmarkss": [{"Name": "tiananmen"}]}
+  * {"response": {"landmarkss": [**{"Name": "tiananmen"}**]}   // name也是一个文档
+
+#### op
+##### insert 文档
+* 检查文档是否有_id, 没有指定_id
+* 检查数据大小>16Mb, 大于则不能处理
+* 批量插入，检查少，速度比sql数据库快
+
+```
+> db.foo.insert({"bar": "baz"}
+> db.foo.find()
+> {"_id": ObjectId("2314532fjoi328797313uj4h87"), "bar": "baz"}     系统自动生成id
+```
+
+#### 删除文档
+```
+> db.foo.remove()
+> db.foo.remove({"bar":"baz"})
+```
+
+#### upsert模式
+* 如果找到记录更新， 没找到增加
+```
+> db.users.update(("name": "joe"), joe, true, true)
+```
+
+#### multi模式
+* skip
 
 #### 参考书
 * mongodb权威指南
 * 深入学习mongodb
 
+25
+
 ## Cassandra -- 键值数据库
+
+## HBASE
+* hadoop database
+* 分布式，面向列的数据库，来源于google bigtable
+* 日志及数据数据库， 插入和删除都是增加数据+时间戳，不会删除数据而是加一个删除标签
+* 基于HDFS, hadoop filesystem
+
+### big table
+* 所有的数据都可以用三个东西表示：
+  * 行键
+  * 属性
+  * 值
+* 所以所有数据都可以放到一个表里
+* bigtable里如果做groupby很麻烦，但是如果是做基于key，value的查询，则很快
+* bigtable的**join**，可以通过chain key-value queries来实现
+
+#### HBASE 咯i就是图
+|行键|时间戳|列族 限定符(列名) contents|列祖 anchor| ...
+|---|---|----|----|
+|"com.cnn.www"|contents:html..."||
+
+### 时间戳
+
 
 
