@@ -484,4 +484,4 @@ appendonly yes   //enable  AOF
 
 #### 参考书
 HBASE 权威指南 CH1 CH8
-![HBASE Architecture]("img/hbase_architecture.png")
+![HBASE Architecture](img/hbase_architecture.png)
