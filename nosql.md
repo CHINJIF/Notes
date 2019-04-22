@@ -332,10 +332,6 @@ dbfilename dump.rdb    // 快照文件 文件名
 * 会受到内存大小的限制，容易造成内存/redis的崩溃
 * master/slave 也是借助快照文件传递数据
 
-##### 快照会引发的问题
-* 写快照，把数据从load back from 快照，会产生很多io，造成阻塞
-* 解决方法：采用master/slave，永远不要再master上设置快照！ 在slave上设置，那么master不会崩溃
-
 #### AOF
 ```
 appendonly yes   //enable  AOF
@@ -349,8 +345,35 @@ appendonly yes   //enable  AOF
 * redis不会将全部数据装入内存，把热value放入内存，冷数据放在磁盘
 * 但是因为操作系统本身就会做VM优化，所以这个功能其实有重复，后续版本去掉
 
+##### redis 会有的问题
+* 快照会引发的问题
+  * 写快照，把数据从load back from 快照，会产生很多io，造成阻塞
+  * 解决方法：采用master/slave，永远不要再master上设置快照！ 在slave上设置，那么master不会崩溃
+* 主从复制阻塞
+  * 解决： skip
+  
 ## Mongodb -- 文档数据库
+* 基本概念
+* 数据类型和数据模型
+* 分布式：主从复制
+* 分片
+* 管理维护：快照，备份
+* 应用案例
 
+#### 基本概念
+* C++ 编写， 支持Linux，windows，solaris 
+* 主要针对**非结构化数据**，对列无限制
+* 全面的索引支持，可以在任意属性上建立索引
+* 支持map/reduce
+* 高可用
+
+#### 面向文档
+* 文档是一个区别于表格，行/列的概念
+* 无法固定模式/模型，数据结构持续变化的无法被结构化的一条数据，是一个文档
+
+#### 参考书
+* mongodb权威指南
+* 深入学习mongodb
 
 
 ## Cassandra -- 键值数据库
