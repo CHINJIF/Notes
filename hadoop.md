@@ -85,13 +85,56 @@ q=Gq, 求上特征矩阵的特征向量。特征向量q[i]就是rank-score
 
 #### 安装使用
 skip
+##### 测试
 
 ```
 >bin/hadoop dfs -put ../intput in 
 >bin/hadoop dfs -ls ./in/*           // hadoop 分布式文件操作命令
 ```
 
+```
+> bin/hadoop jar hadoop-0.20.2-example.jar wordcount in out     //运行一个叫wordcount的作业
+```
+
+```
+> bin/hadoop dfs -ls ./out
+  /user/grid/out/_logs
+  /user/grid/out/part-r-00000
+```
+
+* 通过浏览器检查jobtracker在结点50030端口，监控jobtracker
+   * http://localhost:50030/jobtracker.jsp
+   * list: complete jobs/filed jobs/running jobs/local logs
+   * job details: file link, running time, etc
+* 通过浏览器访问namenode所在结点在50070端口监控集群
+   * browse filesystem
+   * cluster summary
+   * namenode storage
+   * logs
+
 ## HDFS
+#### 物理存储
+* 每个服务器里有路径
+   * blk—34820934092830
+   * blk—34820934092830_1037.meta
+
+#### 设计思想
+* 硬件错误是常态性的，需要冗余
+* 流式数据方位，支持数据的批量读取，而**非随机读取**，hadoop擅长**数据分析**而**不**是**事务处理**。NOT OLTP, OLAP
+* 简单的一致性模型，为了降低系统复杂性，对文件采取一次性写，多次读。文件一经写入，无法修改
+* 程序采用“数据就进”的原则分配节点执行
+
+#### 体系结构
+* Namenode
+   * 记录文件数据块在哪个datanode的位置和副本信息
+   * 元数据操作：事务日志
+   * 元数据操作：映射文件
+* Datanode
+   * 一次写入，多次读取，不修改
+   * 文件由数据块组成，一般64MB
+* 事务日志
+* 映像文件
+* Secondary Namenode
 
 ## Map Reduce
 
