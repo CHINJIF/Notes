@@ -83,6 +83,14 @@ q=Gq, 求上特征矩阵的特征向量。特征向量q[i]就是rank-score
    * 管理个子节点的task，由jobTracker分配
    * 每个节点自会有一个taskTracker，可以启动多个JVM
 
+#### 安装使用
+skip
+
+```
+>bin/hadoop dfs -put ../intput in 
+>bin/hadoop dfs -ls ./in/*           // hadoop 分布式文件操作命令
+```
+
 ## HDFS
 
 ## Map Reduce
