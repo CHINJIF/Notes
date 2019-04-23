@@ -46,9 +46,46 @@ q=Gq, 求上特征矩阵的特征向量。特征向量q[i]就是rank-score
 * Map-reduce
 * Big table
 
-## map reduce
+#### lucene
+* Hadoop的源起 -- Lucene
+* java 做的全文检索工具
+* lucene的微缩版：Nutch
+
+### Hadoop子项目
+* HBASE, PIG, HIVE
+* MapReduce, HDFS, ZooKeeper
+* Core, Avro
+
+### 架构
+* JobTracker, TaskTracker
+* NameNode, DataNode
+
+##### HDFS
+* NameNode - Master
+   * HDFS的守护程序
+   * 作为分布式文件系统的总控作用
+   * 对内存和I/O进行集中管理
+   * 是单点，有单点故障的风险
+* Secondary NameNode 辅助名称节点
+   * 作为NameNode的备份
+   * 与NameNode通讯，对NameNode快照
+* DataNode - Slave
+   * 数据分布式存储
+
+##### MapReduce
+* JobTracker - Master
+   * 用于处理作业(用户提交代码)的后台程序
+   * 决定那些文件参与处理，然后切割task并分配节点
+   * 监控task，重启失败的task
+   * 每个集群只有唯一的一个JobTracker，位于master节点
+* TaskTrakcer - Slave
+   * 位于Slave节点和与datanode结合
+   * 管理个子节点的task，由jobTracker分配
+   * 每个节点自会有一个taskTracker，可以启动多个JVM
 
 ## HDFS
+
+## Map Reduce
 
 ## HBASE
 
@@ -59,3 +96,4 @@ q=Gq, 求上特征矩阵的特征向量。特征向量q[i]就是rank-score
 * pig 可以看作是 pig latin 到 map-reduce的映射器
 
 ## Hive
+* 把SQL语句映射为mapReduce的查询
