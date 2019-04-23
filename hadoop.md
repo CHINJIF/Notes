@@ -188,6 +188,11 @@ skip
 > bin/hadoop dfs -cat path
 ```
 
+###### 查看多个文件
+```
+> zcat *.gz > abc       // 合并多个小文件到一个
+``` 
+
 ###### 查看管理信息
 ```
 > bin/hadoop dfsadmin -report
@@ -207,9 +212,23 @@ skip
 * 运行start-balancer.sh进行负载均衡
 
 ## Map Reduce
+### 示例，气象局
+* map: 每一条数据，map 提取年份操作，和对应气温
+* shuffle：按年份聚合 (该步骤可选), shuffle 可以分摊 reduce阶段需要的计算量，一般用于reduce的机器数量很少
+* reduce： 求每一年的最高气温 (也可以不需要reduce，直接写出数据就可以
 
+* **mapper，reducer可以不同组合**
+* **可以分治的算法就可以map-reduce**， map对应分，reduce
+* reducer 的数量可以配置
+* shuffler 在reduce之前对数据进行预处理和压缩
+
+#### 代码
+```java
+
+```
 
 ## HBASE
+
 
 ## Pig
 * pig 是hadoop的客户端
