@@ -88,8 +88,8 @@ skip
 ##### 测试
 
 ```
->bin/hadoop dfs -put ../intput in 
->bin/hadoop dfs -ls ./in/*           // hadoop 分布式文件操作命令
+> bin/hadoop dfs -put ../intput in 
+> bin/hadoop dfs -ls ./in/*           // hadoop 分布式文件操作命令
 ```
 
 ```
@@ -156,6 +156,24 @@ skip
    * 映像文件 + 事务日志是namenode的核心数据
    * 增加映像文件 + 事务日志的备份
 * 快照
+
+### HDFS文件操作
+* 命令行方式
+* API方式
+
+###### 列出目录
+* HDFS里面没有当前目录的概念，只能ls，不能cd
+```
+> bin/hadoop dfs -ls ./in/
+```
+
+###### 上传文件
+* HDFS里面没有当前目录的概念，只能ls，不能cd
+```
+> bin/hadoop dfs -put path target_path
+```
+
+
 
 ## Map Reduce
 
