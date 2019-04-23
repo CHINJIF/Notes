@@ -173,9 +173,41 @@ skip
 > bin/hadoop dfs -put path target_path
 ```
 
+###### 复制到本地
+```
+> bin/hadoop dfs -get source_path output_path
+```
 
+###### 删除
+```
+> bin/hadoop dfs -rmr path
+```
+
+###### 查看内容
+```
+> bin/hadoop dfs -cat path
+```
+
+###### 查看管理信息
+```
+> bin/hadoop dfsadmin -report
+```
+
+###### 安全模式
+```
+> bin/hadoop dfsadmin -safemode enter
+```
+
+#### Hadoop管理节点
+##### 增加namenode
+* 新机器安装好hadoop
+* 复制namenode的配置文件复制到该节点
+* 修改masters，slaves文件，增加该节点
+* hadoop-daemon.sh start datanode/tasktracker
+* 运行start-balancer.sh进行负载均衡
 
 ## Map Reduce
+
 
 ## HBASE
 
