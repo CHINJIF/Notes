@@ -217,6 +217,7 @@ skip
 * shuffle：按年份聚合 (该步骤可选), shuffle 可以分摊 reduce阶段需要的计算量，一般用于reduce的机器数量很少
 * reduce： 求每一年的最高气温 (也可以不需要reduce，直接写出数据就可以
 
+
 * **mapper，reducer可以不同组合**
 * **可以分治的算法就可以map-reduce**， map对应分，reduce
 * reducer 的数量可以配置
@@ -226,6 +227,11 @@ skip
 ```java
 
 ```
+
+#### 调度机制
+* 队列
+* 支持公平调度
+
 
 ## HBASE
 
@@ -238,3 +244,8 @@ skip
 
 ## Hive
 * 把SQL语句映射为mapReduce的查询
+
+
+## YARN
+
+## Data serialization: Parquet, Avro
