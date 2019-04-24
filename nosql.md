@@ -588,12 +588,17 @@ delete  'member', 'scutshuxue', 'info'
 deleteall 'member', 'scutshuxue'
 ```
 
+
 ### 模式设计和场景应用
 ##### 什么场景试用
 * 成熟的数据分析主题，查询模式已经确立且不轻易改变
 * 适合海量的，但是简单的操作(key-value)
 * 适合高速插入，大量读取
 
+### 辅助索引
+* HBASE 不能在列上面做secendary index, 辅助索引
+* 辅助表
+* 复合行键：userid-messageid, 用两个key，符合成一个key，让查询更灵活
 #### 参考书
 HBASE 权威指南 CH1 CH8
 
