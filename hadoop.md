@@ -1,4 +1,7 @@
 ## hadoop
+https://www.bilibili.com/video/av19923916?from=search&seid=6431573551699749003
+https://www.bilibili.com/video/av7567819?from=search&seid=1543991856954738125
+
 #### 起源
 google搜索引擎
 * google集装箱数据中心，每个集装箱里又1160台服务器，标准化。能效比1.25.一般公司在2.0
